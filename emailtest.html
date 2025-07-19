@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dance Scheduler</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f4f4f4;
+      background-color: pink;
+    }
+
+    .container {
+      background: white;
+      padding: 30px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+      background-color: rgb(255, 255, 213);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    label, select, input, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    input, select {
+      padding: 8px;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background-color: #9bb8f3;
+    }
+
+    .sendEmailBtn {
+      background-color: rgb(158, 73, 87);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Dance Scheduler</h1>
+
+    <label for="recipientEmail">Send to:</label>
+    <select id="recipientEmail" required>
+      <option value="">--Select Recipient--</option>
+      <option value="dominic@example.com">Dominic</option>
+      <option value="yuna@example.com">Yuna</option>
+    </select>
+
+    <label for="date">Date:</label>
+    <input type="date" id="date" required />
+
+    <label for="time">Time:</label>
+    <input type="time" id="time" required />
+
+    <label for="location">Location:</label>
+    <select id="location" required>
+      <option value="">--Select--</option>
+      <option value="Nelson Fitness Center">Nelson Fitness Center</option>
+      <option value="RISD Gym">RISD Gym</option>
+    </select>
+
+    <label for="mediaLink">Attach a Link (optional):</label>
+    <input type="url" id="mediaLink" placeholder="Paste a link" />
+
+    <button class="sendEmailBtn" id="sendEmailBtn" type="button">Send Email</button>
+  </div>
+
+  <script>
+    document.getElementById('sendEmailBtn').addEventListener('click', function() {
+      const recipient = document.getElementById('recipientEmail').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const location = document.getElementById('location').value;
+      const mediaLink = document.getElementById('mediaLink').value;
+
+      if (!recipient) {
+        alert("Please select a recipient.");
+        return;
+      }
+      if (!date || !time || !location) {
+        alert("Please fill date, time, and location.");
+        return;
+      }
+
+      const subject = encodeURIComponent("Dance Session Request");
+      let body = `Hello!\n\nHere are the dance session details:\n\n`;
+      body += `Date: ${date}\n`;
+      body += `Time: ${time}\n`;
+      body += `Location: ${location}\n`;
+      if(mediaLink) {
+        body += `Media link: ${mediaLink}\n`;
+      }
+
+      const mailtoLink = `mailto:${recipient}?subject=${subject}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoLink;
+    });
+  </script>
+
+</body>
+</html>
